@@ -30,10 +30,10 @@ public class HeroValidator implements Validator {
     public void validate(Object target, Errors errors) {
         HeroRequest heroDto = (HeroRequest) target;
         log.info("Checking new hero for: {}", heroDto.getUserId());
-        validateCreate(heroDto, errors);
         if (errors.hasErrors()) {
             throw new BindingValidationException((BindingResult) errors);
         }
+        validateCreate(heroDto, errors);
     }
 
     private void validateCreate(HeroRequest heroDto, Errors errors) {
@@ -52,6 +52,10 @@ public class HeroValidator implements Validator {
         if (heroService.getByUserIdOptional(heroDto.getUserId()).isPresent()) {
             errors.rejectValue("", "", String.format("The hero is already linked to the user %s", heroDto.getUserId()));
             log.error(String.format("The hero is already linked to the user %s", heroDto.getUserId()));
+        }
+
+        if (errors.hasErrors()) {
+            throw new BindingValidationException((BindingResult) errors);
         }
     }
 }

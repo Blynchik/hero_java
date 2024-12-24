@@ -336,8 +336,7 @@ public class HeroControllerTest {
                                     "Constitution should be at least 70",
                                     "Intelligence should be at least 70",
                                     "Wisdom should be at least 70",
-                                    "Charisma should be at least 70",
-                                    "Too few points were used. Unused points: 240"
+                                    "Charisma should be at least 70"
                             ))
                     );
         }
@@ -365,8 +364,7 @@ public class HeroControllerTest {
                                     "Constitution should not be more than 180",
                                     "Intelligence should be no more than 180",
                                     "Wisdom should be no more than 180",
-                                    "Charisma should be no more than 180",
-                                    "Too many points have been used. Overused points: 540"
+                                    "Charisma should be no more than 180"
                             ))
                     );
         }

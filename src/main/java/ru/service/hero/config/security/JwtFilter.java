@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import ru.service.hero.config.common.ServerProperties;
 import ru.service.hero.dto.exception.ExceptionInfo;
 import ru.service.hero.dto.exception.ExceptionResponse;
 import ru.service.hero.service.JwtService;
@@ -27,11 +28,15 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 @Component
 @Slf4j
 public class JwtFilter extends OncePerRequestFilter {
+
     private final JwtService jwtService;
+    private final ServerProperties serverProperties;
 
     @Autowired
-    public JwtFilter(JwtService jwtService) {
+    public JwtFilter(JwtService jwtService,
+                     ServerProperties serverProperties) {
         this.jwtService = jwtService;
+        this.serverProperties = serverProperties;
     }
 
     @Override
@@ -80,7 +85,7 @@ public class JwtFilter extends OncePerRequestFilter {
         response.setContentType("application/json; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
         List<ExceptionInfo> exceptions = List.of(new ExceptionInfo(exception, "", message));
-        ExceptionResponse exceptionResponse = new ExceptionResponse(exceptions);
+        ExceptionResponse exceptionResponse = new ExceptionResponse(exceptions, serverProperties.getName(), serverProperties.getPort());
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(exceptionResponse);
         response.setContentLength(json.getBytes(UTF_8).length);

@@ -15,7 +15,7 @@ import ru.service.hero.facade.HeroFacade;
 
 @RestController
 @Slf4j
-@RequestMapping("/api/hero")
+@RequestMapping("/api")
 public class HeroController {
 
     private final HeroFacade heroFacade;
@@ -25,7 +25,7 @@ public class HeroController {
         this.heroFacade = heroFacade;
     }
 
-    @PostMapping
+    @PostMapping("/hero")
     public ResponseEntity<HeroResponse> create(@AuthenticationPrincipal JwtUser jwtUser,
                                                @Valid @RequestBody HeroRequest heroRequest,
                                                BindingResult bindingResult) {
@@ -34,7 +34,7 @@ public class HeroController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping
+    @GetMapping("/hero")
     public ResponseEntity<HeroResponse> getOwn(@AuthenticationPrincipal JwtUser jwtUser) {
         log.info("Request to GET /api/hero/own from: {}", jwtUser.getLogin());
         HeroResponse response = this.heroFacade.getByUserId(jwtUser.getUserId());
