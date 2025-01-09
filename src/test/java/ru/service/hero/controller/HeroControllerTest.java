@@ -59,7 +59,7 @@ public class HeroControllerTest {
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {"/api/admin/hero"})
+        @ValueSource(strings = {"/api/hero/admin"})
         @Description("Тесты на авторизацию")
         void authorizationTest(String url) throws Exception {
             //given
@@ -85,7 +85,7 @@ public class HeroControllerTest {
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {"/api/hero", "/api/admin/hero"})
+        @ValueSource(strings = {"/api/hero", "/api/hero/admin"})
         @Description("Тесты на аутентификацию")
         void authTest(String url) throws Exception {
             //given
