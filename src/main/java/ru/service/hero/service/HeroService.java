@@ -28,6 +28,12 @@ public class HeroService {
         return heroRepo.save(hero);
     }
 
+    @Transactional
+    public Hero save(Hero hero) {
+        log.info("Saving hero for: {}", hero.getUserId());
+        return heroRepo.save(hero);
+    }
+
     public Hero getByUserId(Long userId) {
         log.info("Searching for a hero by userId: {}", userId);
         return heroRepo.findHeroByUserId(userId)

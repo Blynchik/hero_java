@@ -42,6 +42,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
+                                .requestMatchers("/api/hero/admin/increase-attribute", "/api/hero/admin/decrease-attribute").hasRole("SERVICE")
                                 .requestMatchers("/api/hero/admin", "/api/hero/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/api/**").authenticated())
                 .httpBasic(withDefaults())

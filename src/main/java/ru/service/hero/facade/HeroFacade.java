@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import ru.service.hero.dto.hero.HeroRequest;
 import ru.service.hero.dto.hero.HeroResponse;
 import ru.service.hero.model.Hero;
+import ru.service.hero.service.AttributeEnum;
 import ru.service.hero.service.HeroService;
 import ru.service.hero.util.validation.HeroValidator;
 
@@ -19,7 +20,7 @@ public class HeroFacade {
 
     @Autowired
     public HeroFacade(HeroService heroService,
-                      HeroValidator heroValidator){
+                      HeroValidator heroValidator) {
         this.heroService = heroService;
         this.heroValidator = heroValidator;
     }
@@ -35,5 +36,17 @@ public class HeroFacade {
     public HeroResponse getByUserId(Long userId) {
         log.info("Starting the search for the user's hero: {}", userId);
         return new HeroResponse(heroService.getByUserId(userId));
+    }
+
+    public HeroResponse increaseAttributeForUserHero(Long userId, AttributeEnum attribute) {
+        log.info("Starting to increase: {} for user {}", attribute.name(), userId);
+        Hero hero = heroService.getByUserId(userId);
+        return new HeroResponse(heroService.save(attribute.increase(hero)));
+    }
+
+    public HeroResponse decreaseAttributeForUserHero(Long userId, AttributeEnum attribute) {
+        log.info("Starting to decrease: {} for user {}", attribute.name(), userId);
+        Hero hero = heroService.getByUserId(userId);
+        return new HeroResponse(heroService.save(attribute.decrease(hero)));
     }
 }
